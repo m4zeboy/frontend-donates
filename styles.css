@@ -1,0 +1,117 @@
+/* Global */
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+html, body {
+    font-size: 97.5%;
+}
+
+input {
+    width: 100%;
+    padding: .4rem 0;
+    font-size: 1em;
+    border: none;
+    margin-right: .4rem;
+    background: transparent;
+    outline: none;
+    transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) .2s;
+}
+/* AUTH */
+
+#authentication {
+    visibility: hidden;
+}
+
+#authentication.active {
+    visibility: visible;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    background-color: #fbfbfb;
+    padding: 5rem 0 0;
+}
+
+#authentication.active form#auth-form {
+    width: min(70vw, 512px);
+    margin: auto;
+}
+
+#authentication.active form#auth-form fieldset {
+    padding: 1rem;
+    border: 1px solid #dadada;
+    border: none;
+}
+
+
+#authentication.active form#auth-form fieldset legend {
+    margin-bottom: .8rem;
+}
+
+#authentication.active form#auth-form fieldset button.auth-button {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: rgb(42, 70, 230);
+    border: 2px solid rgb(18, 50, 226);
+    color: #FFF;
+    font-weight: bold;
+    /* border-radius: .5rem; */
+    transition: cubic-bezier(0.25, 0.46, 0.45, 0.94) .2s;
+    cursor: pointer;
+    padding: 1.2rem;
+    border-radius: .3rem;
+
+}
+
+#authentication.active form#auth-form fieldset button.auth-button:hover {
+    background-color: rgb(34, 61, 212);
+
+}
+
+.input-group-row .input-box:last-child {
+    margin-top: .4rem;
+}
+
+.input-box {
+    border: 1px solid #dadada;
+    padding: .4rem;
+    border-radius: .3rem;
+}
+.input-box:focus-within {
+    border: 1px solid #333;
+}
+
+.input-box label {
+    font-size: .8em;
+    opacity: .9;
+}
+
+.actions-group {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: .8rem;
+    margin: .8rem 0;
+}
+.display-error {
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+    padding: .5rem;
+    font-size: .9em;
+    background-color: rgba(238, 238, 238, 0.356);
+    border: 1px solid #fafafa;
+}
+
+.display-error.active {
+    height: 100%;
+    display: inline-block;
+    width: 100%;
+    padding: .5rem;
+    background-color: rgba(250, 217, 215, 0.212);
+    color: #c40a0aa6;
+    font-size: .9em;
+    border: 1px solid #c40a0aa6;
+}

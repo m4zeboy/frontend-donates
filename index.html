@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CORAGEM</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+</head>
+<body>
+
+    <!-- <div id="register-container" class="">
+        <div class="content">
+            <form>
+                <fieldset>
+                    <legend>
+                        <h2>Inscreva-se como membro(a)</h2>
+                    </legend>
+                    <div class="input-box">
+                        <label for="register-name">Nome:</label>
+                        <input type="text" id="register-name" name="register-name">
+                    </div>
+                    <div class="input-box">
+                        <label for="register-password">Senha:</label>
+                        <input type="text" id="register-password" name="register-password">
+                    </div>
+                    <button type="submit">Cadastrar</button>
+                </fieldset>
+            </form>
+    
+            <a href="#login-container">Já sou membro</a>
+        </div>
+    </div>
+
+    <div id="login-container" class="active">
+        <div class="content">
+            <form>
+                <fieldset>
+                    <legend>
+                        <h2>Entrar</h2>
+                    </legend>
+                    <div class="input-box">
+                        <label for="login-name">Nome:</label>
+                        <input type="text" id="login-name" name="login-name">
+                    </div>
+                    <div class="input-box">
+                        <label for="login-password">Senha:</label>
+                        <input type="text" id="login-password" name="login-password">
+                    </div>
+                    <button type="submit">Ir</button>
+                </fieldset>
+            </form>
+            <a href="#register-container">Ainda não sou Membro</a>
+        </div>
+    </div> -->
+    <div id="authentication" class="active">
+        <form action="" id="auth-form" onsubmit="Login.handleLogin(event)">
+            <fieldset>
+                <legend>
+                    <h2>Autenticação</h2>
+                    <p>Insira o código de verificação</p>
+                </legend>
+                <div class="input-group-row">
+                    <div class="input-box">
+                        <label for="name">Nome</label>
+                        <input type="text" id="name" name="name" autocomplete="off">
+                    </div>
+                    <div class="input-box">
+                        <label for="password">Senha</label>
+                        <input type="password" id="password" name="password" autocomplete="off" disabled="true">
+                    </div>
+                </div>
+                <div class="actions-group">
+                    <span class="display-error">
+                        <!-- <p>Nome ou senha errados</p> -->
+                    </span>
+                    <button class="auth-button" type="submit">Verificar</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    <div id="app">
+        <header></header>
+        <main></main>
+        <footer></footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
