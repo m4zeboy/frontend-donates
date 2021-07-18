@@ -13,82 +13,63 @@
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
-
-    <!-- <div id="register-container" class="">
-        <div class="content">
-            <form>
-                <fieldset>
-                    <legend>
-                        <h2>Inscreva-se como membro(a)</h2>
-                    </legend>
-                    <div class="input-box">
-                        <label for="register-name">Nome:</label>
-                        <input type="text" id="register-name" name="register-name">
-                    </div>
-                    <div class="input-box">
-                        <label for="register-password">Senha:</label>
-                        <input type="text" id="register-password" name="register-password">
-                    </div>
-                    <button type="submit">Cadastrar</button>
-                </fieldset>
-            </form>
     
-            <a href="#login-container">Já sou membro</a>
-        </div>
-    </div>
-
-    <div id="login-container" class="active">
-        <div class="content">
-            <form>
-                <fieldset>
-                    <legend>
-                        <h2>Entrar</h2>
-                    </legend>
-                    <div class="input-box">
-                        <label for="login-name">Nome:</label>
-                        <input type="text" id="login-name" name="login-name">
-                    </div>
-                    <div class="input-box">
-                        <label for="login-password">Senha:</label>
-                        <input type="text" id="login-password" name="login-password">
-                    </div>
-                    <button type="submit">Ir</button>
-                </fieldset>
-            </form>
-            <a href="#register-container">Ainda não sou Membro</a>
-        </div>
-    </div> -->
+ 
     <div id="authentication" class="active">
         <form action="" id="auth-form" onsubmit="Login.handleLogin(event)">
             <fieldset>
                 <legend>
                     <h2>Autenticação</h2>
-                    <p>Insira o código de verificação</p>
                 </legend>
-                <div class="input-group-row">
-                    <div class="input-box">
-                        <label for="name">Nome</label>
-                        <input type="text" id="name" name="name" autocomplete="off">
-                    </div>
-                    <div class="input-box">
-                        <label for="password">Senha</label>
-                        <input type="password" id="password" name="password" autocomplete="off" disabled="true">
-                    </div>
+                <div class="input-box">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" autocomplete="off">
                 </div>
-                <div class="actions-group">
-                    <span class="display-error">
-                        <!-- <p>Nome ou senha errados</p> -->
-                    </span>
-                    <button class="auth-button" type="submit">Verificar</button>
+                <div class="input-box">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" autocomplete="off">
                 </div>
+                
+                <span class="error"></span>
+                <button class="submit-button"type="submit">Verificar</button>
             </fieldset>
         </form>
     </div>
 
-    <div id="app">
-        <header></header>
-        <main></main>
-        <footer></footer>
+    <div id="app" class="">
+        <div class="content">
+            <header>
+                <img src="./assets/Logo.svg" alt="Logo da campanha Coragem!">
+            </header>
+            <main class="container">
+                <section id="months">
+                    <h2>Que tal encontrar doações pelo mês?</h2>
+                    <div class="month-buttons">
+                        <button id="jan" data-monthID="01" onclick="Donates.all('01')">Janeiro</button>
+                        <button id="fev" data-monthID="02" onclick="Donates.all('02')">Fevereiro</button>
+                        <button id="mar" data-monthID="03" onclick="Donates.all('03')">Março</button>
+                        <button id="abr" data-monthID="04" onclick="Donates.all('04')">Abril</button>
+                        <button id="mai" data-monthID="05" onclick="Donates.all('05')">Maio</button>
+                        <button id="jun" data-monthID="06" onclick="Donates.all('06')">Junho</button>
+                        <button id="jul" data-monthID="07" onclick="Donates.all('07')">Julho</button>
+                        <button id="aug" data-monthID="08" onclick="Donates.all('08')">Agosto</button>
+                        <button id="set" data-monthID="09" onclick="Donates.all('09')">Setembro</button>
+                        <button id="out" data-monthID="10" onclick="Donates.all('10')">Outubro</button>
+                        <button id="nov" data-monthID="11" onclick="Donates.all('11')">Novembro</button>
+                        <button id="dez" data-monthID="12" onclick="Donates.all('12')">Dezembro</button>
+                    </div>
+                </section>
+                <section id="data-table">
+                    <p>Por enquanto nada para ser exibido.</p>
+                </section>
+                <section id="sidebar">
+                    <a href="#" id="new-donate" class="green-button">+ Nova doação</a>
+                </section>
+            </main>
+            <footer>
+                <p>Desenvolvido por Moisés Silva de Azevedo</p>
+            </footer>
+        </div>
     </div>
     <script src="script.js"></script>
 </body>
