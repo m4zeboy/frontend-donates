@@ -14,6 +14,9 @@ const App = {
             Login.container.classList.add('active')
             App.container.classList.remove('active')
         }
+    },
+    reload() {
+        this.init()
     }
 }
 
@@ -80,24 +83,77 @@ Login.nameInput.addEventListener('change', (event) => {
     }
 })
 
+const Months = {
+    container: document.querySelector('#months .month-buttons'),
+    spanClose: document.querySelector("#months .minimize"),
+    toggleContainer() {
+        if(Months.container.classList[1] === "hide") {
+            Months.spanClose.innerHTML = "Fechar"
+            Months.container.classList.remove('hide')
+        } else {
+            Months.spanClose.innerHTML = "Abrir"
+            Months.container.classList.add('hide')
+        }
+    }
+}
+
 const Donates = {
     all(month) {
+        App.reload()
         axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
             .then((res) => {
-                const data = res.data;
-                if (res.data.message === "There are no donates this month.") return Table.container.innerHTML = "Não há doações nesse mês."
-                else {
-                    // Renderizar tabela
+                let data
+                data = res.data;
+                if (data.message) {
+                    Table.tbody.innerHTML = "";
+                    Table.tbody.innerHTML = `
+                    <tr>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+            `
+            ;
+                    return Table.paragraph.innerHTML = "Não há doações nesse mês."
+                } else {
+                    Table.tbody.innerHTML = "";
+                    Table.paragraph.innerHTML = `Aqui estão as doações do mês ${month}`
+                    Table.renderTable(data)
                 }
+
             })
             .catch((err) => {
-                console.log(err.response.data.message)
+                console.log(err)
             })
     }
 }
 
 const Table = {
     container: document.querySelector('section#data-table'),
+    tableElement: document.querySelector('#data-table table'),
+    tbody: document.querySelector('#data-table table tbody'),
+    paragraph: document.querySelector('#data-table p'),
+    renderTable(donates) {
+        // Table.paragraph.innerHTML = `Resultados do mês ${month}`
+        console.log(donates)
+        donates.forEach(donate => {
+            const tr = document.createElement('tr');
+            // Render row
+            tr.innerHTML = Table.renderRow(donate);
+            Table.tbody.appendChild(tr)
+        })
+    }, 
+    renderRow(donate) {
+        return `
+            <td>${donate.family}</td>
+            <td>${donate.address}</td>
+            <td>${donate.responsible}</td>
+            <td>${donate.quantity}</td>
+            <td>${donate.date}</td>
+            `
+    }
 }
 
 

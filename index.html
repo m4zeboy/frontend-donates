@@ -9,6 +9,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="./styles/auth.css">
+    <link rel="stylesheet" href="./styles/form.css">
+    <link rel="stylesheet" href="./styles/buttons.css">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -43,8 +46,8 @@
             </header>
             <main class="container">
                 <section id="months">
-                    <h2>Que tal encontrar doações pelo mês?</h2>
-                    <div class="month-buttons">
+                    <h2><span class="title">Que tal encontrar doações pelo mês?</span> <span class="minimize" onclick="Months.toggleContainer()">Abrir</span></h2>
+                    <div class="month-buttons hide">
                         <button id="jan" data-monthID="01" onclick="Donates.all('01')">Janeiro</button>
                         <button id="fev" data-monthID="02" onclick="Donates.all('02')">Fevereiro</button>
                         <button id="mar" data-monthID="03" onclick="Donates.all('03')">Março</button>
@@ -61,10 +64,28 @@
                 </section>
                 <section id="data-table">
                     <p>Por enquanto nada para ser exibido.</p>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Família</th>
+                                <th>Endereço</th>
+                                <th>Responsável</th>
+                                <th>Qtd</th>
+                                <th>Data</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                                <td>-</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </section>
-                <section id="sidebar">
-                    <a href="#" id="new-donate" class="green-button">+ Nova doação</a>
-                </section>
+                <a href="#" id="new-donate" class="green-button"><h1>+</h1></a>
             </main>
             <footer>
                 <p>Desenvolvido por Moisés Silva de Azevedo</p>

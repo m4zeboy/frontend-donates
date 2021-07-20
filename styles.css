@@ -11,144 +11,14 @@ html, body {
 a {
     text-decoration: none;
 }
-#authentication {
-    opacity: 0;
-    visibility: hidden;
-}
-
-#authentication.active {
-    visibility: visible;
-    opacity: 1;
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    background-color: #fbfbfb;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-#authentication.active form {
-    width: min(480px, 80vw);
-    background-color: #FFF;
-    padding: 1rem;
-    border-radius: .5rem;
-    box-shadow: 1px 5px 10px #6d6d6d15;
-
-}
-#authentication.active form fieldset {
-    border: none;
-}
-
-#authentication.active form fieldset legend {
-    margin-bottom: 1.2rem;
-}
-/* Inputs */
-.input-box {
-    display: flex;
-    flex-direction: column;
-    position: relative;
-    padding: .4rem 0;
-    transition: all .2s;
-}
-
-.input-box input {
-    padding: .8rem;
-    border: 2px solid #d0d0d0;
-    border-radius: .5rem;
-    outline: none;
-    transition: ease .2s;
-
-}
-
-.input-box label {
-    font-weight: 600;
-    font-size: .9em;
-    padding: 0 .1rem;
-    top: -.2rem;
-    left: .6rem;
-    position: absolute;
-    background-color: #FFF;
-    color: #d0d0d0;
-    transition: ease .2s;
-
-}
-
-.input-box:focus-within label {
-    color: orange;
-}
-
-.input-box:focus-within input {
-    border-color: orange;
-}
 
 
-span.error {
-    opacity: 0;
-    transition: all .15s;
-}
-span.error.active {
-    opacity: 1;
-    margin: .4rem 0;
-    background: rgba(247, 25, 29, 0.541) ;
-    color: #fff;
-    border-left: 3px solid #da1818;
-    font-weight: 600;
-    display: inline-block;
-    width: 100%;
-    padding: .4rem;
-}
 
-/* Buttons */
-.submit-button {
-    margin-top: .4rem;
-    width: 100%;
-    padding: .8rem;
-    background-color: #5e76ff;
-    border: 0;
-    border-radius: .5rem;
-    color: white;
-    cursor: pointer;
-    transition: all .2s;
-}
 
-.submit-button:hover {
-    box-shadow: 1px 5px 5px #354abe15;
-}
-
-.green-button {
-    padding: .8rem;
-    background: rgba(37,224,69,0.1);
-    border: 3px solid rgba(37,224,69,1);
-    border-radius: .8rem;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: rgba(37,224,69,1);
-    font-weight: 700;
-    transition: ease .2s;
-}
-.green-button:hover {
-    border: 3px solid rgb(14, 133, 34);
-    color: rgb(14, 133, 34);
-    background-color: rgba(14, 133, 34, 0.1);
-    /* background: linear-gradient(45deg, rgba(94,255,121,1) 0%, rgba(147,249,255,1) 100%); */
-    /* box-shadow: 0px 5px 10px #bccfbf91; */
-}
-.stroke-button {
-    padding: .8rem;
-    background-color: #ddd;
-    border-radius: .8rem;
-    display: flex;
-    align-items: center;
-    text-align: center;
-    color: #222;
-    font-weight: 700;
-}
 
 /* APP */
 .container {
-    width: min(900px, 90vw);
+    width: min(1000px, 90vw);
     margin: auto;
     /* background-color: antiquewhite; */
 }
@@ -185,29 +55,91 @@ span.error.active {
 #app.active main section {
     padding: .5rem;
     background-color: #fbfbfb;
-
+    transition: all .2s
 }
 
 #app.active main {
     display: grid;
+    grid-template-columns: 1fr;
+    gap: 1rem;
     grid-auto-columns: 1fr;
-    grid-template-columns: 4fr 1fr 1fr;
+    grid-template-columns: 4fr 1fr 5rem;
     gap: 1rem;
     grid-column: 1fr 1fr;
     grid-template-areas: 
     "months months sidebar"
-    "data-table data-table data-table";
+    "data-table data-table sidebar";
 }
 
 
 #app.active main h2 {
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: space-between;
 }
 #months {
     grid-area: months;
 }
+
+#app.active main .month-buttons {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: .5rem;
+    transition: all .2s;
+    opacity: 1;
+}
+
+#app.active main .month-buttons button {
+    padding: .2rem;
+    opacity: .8;
+    border-radius: .3rem;
+    transition: all .2s;
+    font-weight: 600;
+    transition: all .2s
+}
+
+#app.active main .month-buttons button:hover {
+    opacity: .5;
+}
+#app.active main .month-buttons button:focus {
+    border: 2px solid black;
+    background-color: rgba(0, 0, 0, 0.247);
+    color: black;
+    opacity: 1;
+    font-weight: 800;
+}
+
+#months h2 span.minimize {
+    display: flex;
+    padding: .2rem;
+    border-radius: .8rem;
+    max-height: 1.5rem;
+    align-items: center;
+    justify-content: center;
+    font-size: .5em;
+    /* background-color: #e5e5e5; */
+    border: 1px solid;
+    cursor: pointer;
+    transition: all .15s;
+}
+
+#app.active main .month-buttons.hide {
+    visibility: none;
+    display: none;
+    opacity: 0;
+    transition: all .2s;
+}
+
 #data-table {
     grid-area: data-table;
+}
+
+#data-table table.hide {
+    visibility: hidden;
+}
+
+#data-table table {
+    visibility: visible;
 }
 
 #sidebar {
@@ -215,95 +147,14 @@ span.error.active {
 }
 
 
-#app.active main .month-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: .5rem;
+#new-donate {
+    height: 5rem;
+    border-radius: 10rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-#app.active main .month-buttons button {
-    padding: .2rem;
-    border-radius: .3rem;
-    transition: all .2s;
-    font-weight: 600;
-}
-
-#app.active main .month-buttons button:hover {
-    opacity: .8;
-}
-
-/* month buttons */
-#jan {
-    background-color: rgba(255, 47, 47, 0.164);
-    border: 2px solid rgb(128, 0, 0);
-    color: rgb(128, 0, 0);
-}
-
-#fev {
-    background-color: rgba(255, 141, 47, 0.164);
-    border: 2px solid rgb(128, 62, 0);
-    color: rgb(128, 62, 0);
-}
-
-#mar {
-    background-color: rgba(255, 189, 47, 0.164);
-    border: 2px solid rgb(128, 98, 0);
-    color: rgb(128, 98, 0);
-}
-
-#abr {
-    background-color: rgba(255, 234, 47, 0.164);
-    border: 2px solid rgb(128, 109, 0);
-    color: rgb(128, 109, 0);
-}
-
-#mai {
-    background-color: rgba(224, 255, 47, 0.164);
-    border: 2px solid rgb(115, 128, 0);
-    color: rgb(115, 128, 0);
-}
-
-#jun {
-    background-color: rgba(175, 255, 47, 0.164);
-    border: 2px solid rgb(94, 128, 0);
-    color:  rgb(94, 128, 0);
-}
-
-#jul {
-    background-color: rgba(95, 255, 47, 0.164);
-    border: 2px solid rgb(47, 128, 0);
-    color:  rgb(47, 128, 0);
-}
-
-#aug {
-    background-color: rgba(47, 255, 141, 0.164);
-    border: 2px solid rgb(0, 128, 79);
-    color:   rgb(0, 128, 79);
-}
-
-#set {
-    background-color: rgba(47, 172, 255, 0.164);
-    border: 2px solid rgb(0, 113, 128);
-    color:   rgb(0, 113, 128);
-}
-
-#out {
-    background-color: rgba(47, 85, 255, 0.164);
-    border: 2px solid rgb(0, 70, 128);
-    color:   rgb(0, 70, 128);
-}
-
-#nov {
-    background-color: rgba(127, 47, 255, 0.164);
-    border: 2px solid rgb(66, 0, 128);
-    color:   rgb(66, 0, 128);
-}
-
-#dez {
-    background-color: rgba(213, 47, 255, 0.164);
-    border: 2px solid rgb(128, 0, 117);
-    color:   rgb(128, 0, 117);
-}
 
 
 footer {
@@ -320,5 +171,14 @@ footer {
 
     #app.active main .month-buttons {
         grid-template-columns: 1fr 1fr 1fr;
+    }
+
+    #new-donate {
+        width: 5rem;
+        height: 5rem;
+        border-radius: 10rem;
+        position: fixed;
+        left: 1rem;
+        bottom: 1rem;
     }
 }

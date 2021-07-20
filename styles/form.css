@@ -1,0 +1,55 @@
+/* Inputs */
+.input-box {
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    padding: .4rem 0;
+    transition: all .2s;
+}
+
+.input-box input {
+    padding: .8rem;
+    border: 2px solid #d0d0d0;
+    border-radius: .5rem;
+    outline: none;
+    transition: ease .2s;
+
+}
+
+.input-box label {
+    font-weight: 600;
+    font-size: .9em;
+    padding: 0 .1rem;
+    top: -.2rem;
+    left: .6rem;
+    position: absolute;
+    background-color: #FFF;
+    color: #d0d0d0;
+    transition: ease .2s;
+
+}
+
+.input-box:focus-within label {
+    color: orange;
+}
+
+.input-box:focus-within input {
+    border-color: orange;
+}
+
+
+span.error {
+    opacity: 0;
+    transition: all .15s;
+}
+span.error.active {
+    opacity: 1;
+    margin: .4rem 0;
+    background: rgba(247, 25, 29, 0.541) ;
+    color: #fff;
+    border-left: 3px solid #da1818;
+    font-weight: 600;
+    display: inline-block;
+    width: 100%;
+    padding: .4rem;
+}
