@@ -97,9 +97,26 @@ const Months = {
     }
 }
 
+const Utils = {
+    getMonth(monthNumber) {
+        if(monthNumber === "01") return "Janeiro";
+        if(monthNumber === "02") return "Fevereiro";
+        if(monthNumber === "03") return "Março";
+        if(monthNumber === "04") return "Abril";
+        if(monthNumber === "05") return "Maio";
+        if(monthNumber === "06") return "Junho";
+        if(monthNumber === "07") return "Julho";
+        if(monthNumber === "08") return "Agosto";
+        if(monthNumber === "09") return "Setembro";
+        if(monthNumber === "10") return "Outubro";
+        if(monthNumber === "11") return "Novembro";
+        if(monthNumber === "12") return "Dezembro";
+    }
+}
+
 const Donates = {
     all(month) {
-        App.reload()
+        Table.text.innerHTML = "Aguarde..."
         axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
             .then((res) => {
                 let data
@@ -113,13 +130,15 @@ const Donates = {
                         <td>-</td>
                         <td>-</td>
                         <td>-</td>
+                        <td>-</td>
                     </tr>
             `
             ;
-                    return Table.paragraph.innerHTML = "Não há doações nesse mês."
+                    return Table.text.innerHTML = "<p>Não há doações nesse mês.</p>"
                 } else {
                     Table.tbody.innerHTML = "";
-                    Table.paragraph.innerHTML = `Aqui estão as doações do mês ${month}`
+                    const formatedMonth = Utils.getMonth(month)
+                    Table.text.innerHTML = `<h2>Aqui estão as doações do mês ${formatedMonth}<h2>`
                     Table.renderTable(data)
                 }
 
@@ -127,6 +146,15 @@ const Donates = {
             .catch((err) => {
                 console.log(err)
             })
+    },
+    add() {
+        Donates.Modal.toggle()
+    },
+    Modal: {
+        container: document.querySelector('#modal-add-donate'),
+        toggle() {
+            Donates.Modal.container.classList.toggle('active');
+        }   
     }
 }
 
@@ -134,13 +162,14 @@ const Table = {
     container: document.querySelector('section#data-table'),
     tableElement: document.querySelector('#data-table table'),
     tbody: document.querySelector('#data-table table tbody'),
-    paragraph: document.querySelector('#data-table p'),
+    text: document.querySelector('#data-table span'),
     renderTable(donates) {
         // Table.paragraph.innerHTML = `Resultados do mês ${month}`
         console.log(donates)
         donates.forEach(donate => {
             const tr = document.createElement('tr');
             // Render row
+            tr.dataset.index = donate.id;
             tr.innerHTML = Table.renderRow(donate);
             Table.tbody.appendChild(tr)
         })
@@ -152,9 +181,11 @@ const Table = {
             <td>${donate.responsible}</td>
             <td>${donate.quantity}</td>
             <td>${donate.date}</td>
+            <td class="delete-donate"><img src="./assets/delete.svg"></td>
             `
     }
 }
+
 
 
 App.init()

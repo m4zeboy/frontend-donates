@@ -12,6 +12,8 @@
     <link rel="stylesheet" href="./styles/auth.css">
     <link rel="stylesheet" href="./styles/form.css">
     <link rel="stylesheet" href="./styles/buttons.css">
+    <link rel="stylesheet" href="./styles/table.css">
+    <link rel="stylesheet" href="./styles/modal.css">
 
     <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
@@ -63,34 +65,76 @@
                     </div>
                 </section>
                 <section id="data-table">
-                    <p>Por enquanto nada para ser exibido.</p>
-                    <table>
-                        <thead>
-                            <tr>
-                                <th>Família</th>
-                                <th>Endereço</th>
-                                <th>Responsável</th>
-                                <th>Qtd</th>
-                                <th>Data</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                                <td>-</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <span>Por enquanto nada para ser exibido.</span>
+                    <div class="margin">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Família</th>
+                                    <th>Endereço</th>
+                                    <th>Responsável</th>
+                                    <th>Qtd</th>
+                                    <th>Data</th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td></td>
+                                </tr>
+                                <!-- <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                </tr> -->
+                            </tbody>
+                        </table>
+                    </div>
                 </section>
-                <a href="#" id="new-donate" class="green-button"><h1>+</h1></a>
+                <a href="#" id="new-donate" class="green-button" onclick="Donates.add()"><h1>+</h1></a>
             </main>
             <footer>
                 <p>Desenvolvido por Moisés Silva de Azevedo</p>
             </footer>
         </div>
+    </div>
+
+    <div id="modal-add-donate" class="">
+        <form action="" id="add-donate-form">
+            <fieldset>
+                <legend><h2>Salvar uma nova doação</h2> <span class="minimize" onclick="Donates.Modal.toggle()">Fechar</span></legend>
+                <div class="input-box">
+                    <label for="family">Faília</label>
+                    <input type="text" id="family" name="family" autocomplete="off">
+                </div>
+                <div class="input-box">
+                    <label for="address">Endereço</label>
+                    <input type="text" id="address" name="address" autocomplete="off">
+                </div>
+                <div class="input-box">
+                    <label for="responsible">Responsável</label>
+                    <input type="text" id="responsible" name="responsible" autocomplete="off">
+                </div>
+                <div class="input-group-1fr-3fr">
+                    <div class="input-box">
+                        <label for="quantity">Qtd</label>
+                        <input type="number" id="quantity" name="quantity" autocomplete="off">
+                    </div>
+                    <div class="input-box">
+                        <label for="date">Data</label>
+                        <input type="date" id="date" name="date" autocomplete="off">
+                    </div>
+                </div>
+                <button class="submit-button"type="submit">Adcionar</button>
+            </fieldset>
+        </form>
     </div>
     <script src="script.js"></script>
 </body>

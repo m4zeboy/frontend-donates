@@ -1,0 +1,52 @@
+#modal-add-donate {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+    transition: all .2s;
+}
+
+#modal-add-donate.active {
+    visibility: visible;
+    opacity: 1;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #fbfbfbd0;
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+}
+
+
+#modal-add-donate form {
+    height: 0px;
+    transition: all .2s;
+    margin-bottom: -10rem;
+
+}
+
+#modal-add-donate.active form {
+    height: auto;
+    transition: all .2s;
+    margin-bottom: 0;
+}
+.input-group-1fr-3fr {
+    display: grid;
+    grid-template-columns: 1fr 3fr;
+    gap: .4rem;
+}
+
+.input-group-1fr-3fr .input-box input[type="date"] {
+    width: 100%;
+    background-color: #FFF;
+}
+
+.input-group-1fr-3fr .input-box input#quantity {
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+}
