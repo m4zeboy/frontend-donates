@@ -15,7 +15,6 @@
     <link rel="stylesheet" href="./styles/table.css">
     <link rel="stylesheet" href="./styles/modal.css">
 
-    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 </head>
 <body>
     
@@ -44,7 +43,7 @@
     <div id="app" class="">
         <div class="content">
             <header>
-                <img src="./assets/Logo.svg" alt="Logo da campanha Coragem!">
+                <img src="./assets/Logo.svg" alt="Logo da campanha Coragem!" title="Logo não oficial da campanha coragem">
             </header>
             <main class="container">
                 <section id="months">
@@ -98,7 +97,7 @@
                         </table>
                     </div>
                 </section>
-                <a href="#" id="new-donate" class="green-button" onclick="Donates.add()"><h1>+</h1></a>
+                <a href="#" id="new-donate" class="green-button" onclick="Donates.showModal()" title="Salvar uma nova doação"><h1>+</h1></a>
             </main>
             <footer>
                 <p>Desenvolvido por Moisés Silva de Azevedo</p>
@@ -107,7 +106,7 @@
     </div>
 
     <div id="modal-add-donate" class="">
-        <form action="" id="add-donate-form">
+        <form action="" id="add-donate-form" onsubmit="Donates.add(event)">
             <fieldset>
                 <legend><h2>Salvar uma nova doação</h2> <span class="minimize" onclick="Donates.Modal.toggle()">Fechar</span></legend>
                 <div class="input-box">
@@ -132,10 +131,13 @@
                         <input type="date" id="date" name="date" autocomplete="off">
                     </div>
                 </div>
+                <span class="error"></span>
                 <button class="submit-button"type="submit">Adcionar</button>
             </fieldset>
         </form>
     </div>
+    <span class="success">Doação salva :)</span>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
     <script src="script.js"></script>
 </body>
 </html>

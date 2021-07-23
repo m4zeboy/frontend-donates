@@ -7,7 +7,7 @@ const App = {
     },
     init() {
         const token = _Storage.getToken();
-        if(token) {
+        if (token) {
             App.container.classList.add('active')
             Login.container.classList.remove('active')
         } else {
@@ -35,45 +35,54 @@ const Login = {
     container: document.querySelector('#authentication'),
     span: document.querySelector('#authentication span.error'),
     button: document.querySelector('#authentication button'),
-    async handleLogin(event) {
+    handleLogin: async event => {
         event.preventDefault()
         const credentials = {
             name: Login.nameInput.value,
             password: Login.passInput.value
         }
-
+        const { name, password } = credentials;
         Login.button.innerHTML = "Aguarde"
 
-        axios.post('https://donates-server.herokuapp.com/api/auth/login', { name: credentials.name, password: credentials.password }).then((res) => {
-            const token = res.data.token
-            _Storage.setToken(token)
-            Login.container.classList.remove('active')
-            App.display()
+        axios.post('https://donates-server.herokuapp.com/api/auth/login', { name, password })
+            .then((res) => {
+                const token = res.data.token
+                _Storage.setToken(token)
+                Login.container.classList.remove('active')
+                App.display()
 
-            
-        }).catch((err) => {
-            const message = err.response.data.message;
-            Login.span.classList.add('active'), 3000
-            
-            console.log(message)
-            if (message === "Name and password are required") {
-                const translatedMessage = "Informe nome e senha"
-                Login.span.innerHTML = `<p>${translatedMessage}</p>`
-            }
-            if (message === "Invalid Credentials") {
-                const translatedMessage = "Credenciais inválidas."
-                Login.span.innerHTML = `<p>${translatedMessage}</p>`
-            }
 
-            setTimeout(() => {
-                Login.span.innerHTML = ``
-                Login.span.classList.remove('active')
-            },3000)
-            
-        })
+            })
+            .catch((err) => {
+                const message = err.response.data.message;
+                Login.span.classList.add('active');
+
+                console.log(message)
+                if (message === "Name and password are required") {
+                    const translatedMessage = "Informe nome e senha"
+                    Login.span.innerHTML = `<p>${translatedMessage}</p>`
+                }
+                if (message === "Invalid Credentials") {
+                    const translatedMessage = "Credenciais inválidas."
+                    Login.span.innerHTML = `<p>${translatedMessage}</p>`
+                }
+
+                setTimeout(() => {
+                    Login.span.innerHTML = ``
+                    Login.span.classList.remove('active')
+                }, 3000)
+
+            })
     }
 
 }
+
+const url = "https://donates-server.herokuapp.com/api"
+const API = axios.create({
+    baseURL: 'https://donates-server.herokuapp.com/api/',
+    timeout: 10000000000,
+    headers: { 'Authorization': _Storage.getToken() }
+})
 
 Login.nameInput.addEventListener('change', (event) => {
     if (Login.nameInput.value.length !== 0) {
@@ -87,7 +96,7 @@ const Months = {
     container: document.querySelector('#months .month-buttons'),
     spanClose: document.querySelector("#months .minimize"),
     toggleContainer() {
-        if(Months.container.classList[1] === "hide") {
+        if (Months.container.classList[1] === "hide") {
             Months.spanClose.innerHTML = "Fechar"
             Months.container.classList.remove('hide')
         } else {
@@ -99,25 +108,39 @@ const Months = {
 
 const Utils = {
     getMonth(monthNumber) {
-        if(monthNumber === "01") return "Janeiro";
-        if(monthNumber === "02") return "Fevereiro";
-        if(monthNumber === "03") return "Março";
-        if(monthNumber === "04") return "Abril";
-        if(monthNumber === "05") return "Maio";
-        if(monthNumber === "06") return "Junho";
-        if(monthNumber === "07") return "Julho";
-        if(monthNumber === "08") return "Agosto";
-        if(monthNumber === "09") return "Setembro";
-        if(monthNumber === "10") return "Outubro";
-        if(monthNumber === "11") return "Novembro";
-        if(monthNumber === "12") return "Dezembro";
+        if (monthNumber === "01") return "Janeiro";
+        if (monthNumber === "02") return "Fevereiro";
+        if (monthNumber === "03") return "Março";
+        if (monthNumber === "04") return "Abril";
+        if (monthNumber === "05") return "Maio";
+        if (monthNumber === "06") return "Junho";
+        if (monthNumber === "07") return "Julho";
+        if (monthNumber === "08") return "Agosto";
+        if (monthNumber === "09") return "Setembro";
+        if (monthNumber === "10") return "Outubro";
+        if (monthNumber === "11") return "Novembro";
+        if (monthNumber === "12") return "Dezembro";
+    },
+    formatDate(date) {
+        // 2021-06-30
+        const splitedDate = date.split('-');
+        // [2021, 06, 30] : [ano, mes, dia];
+        const formatedDate = `${splitedDate[2]}/${splitedDate[1]}/${splitedDate[0]}`
+        return formatedDate;
+    },
+    getMonthOfDonateAdded(formatedDate) {
+        const splitedDate = formatedDate.split('/');
+        // [dia, mes, ano]
+        const month = splitedDate[1];
+        return month;
     }
 }
 
 const Donates = {
     all(month) {
         Table.text.innerHTML = "Aguarde..."
-        axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
+        // axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
+        API.get(`/donates/${month}`)
             .then((res) => {
                 let data
                 data = res.data;
@@ -133,7 +156,7 @@ const Donates = {
                         <td>-</td>
                     </tr>
             `
-            ;
+                        ;
                     return Table.text.innerHTML = "<p>Não há doações nesse mês.</p>"
                 } else {
                     Table.tbody.innerHTML = "";
@@ -147,14 +170,76 @@ const Donates = {
                 console.log(err)
             })
     },
-    add() {
+    showModal() {
         Donates.Modal.toggle()
+    },
+    add(event) {
+        event.preventDefault();
+        const { familyInput, addressInput, responsibleInput, quantityInput, dateInput } = Donates.Form;
+        const inputValuesIsEmpty = Donates.Form.verifyIfValuesIsEmpty()
+        if (inputValuesIsEmpty) {
+            Donates.Form.error.classList.add('active')
+            Donates.Form.error.innerHTML = "Preencha todos os campos"
+
+            setTimeout(() => {
+                Donates.Form.error.innerHTML = ``
+                Donates.Form.error.classList.remove('active')
+            }, 3000)
+        } else {
+            const formatedDate = Utils.formatDate(dateInput.value)
+            const monthOfDonate = Utils.getMonthOfDonateAdded(formatedDate)
+            // const token = _Storage.getToken()
+            const data = {
+                family: familyInput.value,
+                address: addressInput.value,
+                responsible: responsibleInput.value,
+                quantity: quantityInput.value,
+                date: formatedDate,
+            }
+            API.post('/donates', data)
+                .then((response) => {
+                    console.log(response.data.message)
+                    Donates.Form.resetValues();
+                    Donates.Modal.container.classList.remove('active')
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }
+      
+   
+
+
     },
     Modal: {
         container: document.querySelector('#modal-add-donate'),
         toggle() {
             Donates.Modal.container.classList.toggle('active');
-        }   
+        }
+    },
+    Form: {
+        familyInput: document.querySelector('input#family'),
+        addressInput: document.querySelector('input#address'),
+        responsibleInput: document.querySelector('input#responsible'),
+        quantityInput: document.querySelector('input#quantity'),
+        dateInput: document.querySelector('input#date'),
+        error: document.querySelector('#add-donate-form span.error'),
+        verifyIfValuesIsEmpty() {
+            if (this.familyInput.value.length === 0 ||
+                this.addressInput.value.length === 0 ||
+                this.responsibleInput.value.length === 0 ||
+                this.quantityInput.value.length === 0 ||
+                this.dateInput.value.length === 0) {
+                return true
+            } else return false
+        },
+        resetValues() {
+            Donates.Form.familyInput.value = ""
+            Donates.Form.addressInput.value = ""
+            Donates.Form.responsibleInput.value = ""
+            Donates.Form.quantityInput.value = ""
+            Donates.Form.dateInput.value = ""
+        }
     }
 }
 
@@ -173,7 +258,7 @@ const Table = {
             tr.innerHTML = Table.renderRow(donate);
             Table.tbody.appendChild(tr)
         })
-    }, 
+    },
     renderRow(donate) {
         return `
             <td>${donate.family}</td>
@@ -181,7 +266,7 @@ const Table = {
             <td>${donate.responsible}</td>
             <td>${donate.quantity}</td>
             <td>${donate.date}</td>
-            <td class="delete-donate"><img src="./assets/delete.svg"></td>
+            <td class="options"><img src="./assets/delete.svg" title="Excluir essa doação"><img src="./assets/edit.svg" title="Editar essa doação"></td>
             `
     }
 }

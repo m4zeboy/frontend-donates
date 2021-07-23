@@ -157,6 +157,7 @@ a {
 
 footer {
     text-align: center;
+    padding: 2rem;
 }
 
 @media (max-width: 700px) {
