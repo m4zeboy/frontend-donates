@@ -34,3 +34,21 @@ form fieldset {
      justify-content: space-between;
     margin-bottom: 1.2rem;
 }
+
+.load {
+    animation: load 1s infinite;
+    border: .3rem solid #424eff;
+    border-top-color: #fbfbfb;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}
+
+.load.green {
+    animation: load 1s infinite;
+    border: .3rem solid #e5e5e5;
+    border-top-color: #42ff52;
+    border-radius: 50%;
+    width: 2rem;
+    height: 2rem;
+}

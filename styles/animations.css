@@ -1,0 +1,5 @@
+@keyframes load {
+    to {
+        transform: rotate(1turn);
+    }
+}

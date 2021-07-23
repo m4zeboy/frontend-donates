@@ -42,7 +42,7 @@ const Login = {
             password: Login.passInput.value
         }
         const { name, password } = credentials;
-        Login.button.innerHTML = "Aguarde"
+        Login.button.innerHTML = "<div class='load'><div>"
 
         axios.post('https://donates-server.herokuapp.com/api/auth/login', { name, password })
             .then((res) => {
@@ -61,10 +61,13 @@ const Login = {
                 if (message === "Name and password are required") {
                     const translatedMessage = "Informe nome e senha"
                     Login.span.innerHTML = `<p>${translatedMessage}</p>`
+                    Login.button.innerHTML = "Tente Novamente"
+
                 }
                 if (message === "Invalid Credentials") {
                     const translatedMessage = "Credenciais inválidas."
                     Login.span.innerHTML = `<p>${translatedMessage}</p>`
+                    Login.button.innerHTML = "Tente Novamente"
                 }
 
                 setTimeout(() => {
@@ -138,7 +141,7 @@ const Utils = {
 
 const Donates = {
     all(month) {
-        Table.text.innerHTML = "Aguarde..."
+        Table.text.innerHTML = "<div class='load green'><div>"
         // axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
         API.get(`/donates/${month}`)
             .then((res) => {
@@ -201,6 +204,13 @@ const Donates = {
                     console.log(response.data.message)
                     Donates.Form.resetValues();
                     Donates.Modal.container.classList.remove('active')
+                    Donates.Form.success.classList.add('active')
+                    Donates.Form.success.innerHTML = "Doação Salva"
+
+                    setTimeout(() => {
+                        Donates.Form.success.innerHTML = ``
+                        Donates.Form.success.classList.remove('active')
+                    }, 3000)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -224,6 +234,7 @@ const Donates = {
         quantityInput: document.querySelector('input#quantity'),
         dateInput: document.querySelector('input#date'),
         error: document.querySelector('#add-donate-form span.error'),
+        success: document.querySelector('span.success'),
         verifyIfValuesIsEmpty() {
             if (this.familyInput.value.length === 0 ||
                 this.addressInput.value.length === 0 ||
