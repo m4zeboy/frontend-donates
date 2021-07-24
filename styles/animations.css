@@ -3,3 +3,38 @@
         transform: rotate(1turn);
     }
 }
+
+@keyframes hidden-animation {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes appear {
+    from {
+        margin-bottom: -5rem;
+        opacity: 0;
+        display: none;
+        transition: all .15s;
+    }
+    to {
+        bottom: 0;
+        opacity: 1;
+        display: initial;
+    }
+}
+.appear {
+    animation-name: appear;
+    animation-duration: .3s;    
+    animation-fill-mode: backwards;
+}
+
+.hidden-animation {
+    animation-name: hidden-animation;
+    animation-duration: .5s;    
+    animation-fill-mode: backwards;
+}
+

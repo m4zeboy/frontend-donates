@@ -1,3 +1,19 @@
+const _Storage = {
+    setToken(token) {
+        sessionStorage.setItem('token', token)
+    },
+    getToken() {
+        return sessionStorage.getItem('token')
+    }
+}
+
+const url = "https://donates-server.herokuapp.com/api"
+const API = axios.create({
+    baseURL: 'https://donates-server.herokuapp.com/api/',
+    timeout: 10000000000,
+    headers: { 'Authorization': _Storage.getToken() }
+})
+
 const App = {
     container: document.querySelector('div#app'),
     display() {
@@ -20,14 +36,7 @@ const App = {
     }
 }
 
-const _Storage = {
-    setToken(token) {
-        sessionStorage.setItem('token', token)
-    },
-    getToken() {
-        return sessionStorage.getItem('token')
-    }
-}
+
 
 const Login = {
     nameInput: document.querySelector('#name'),
@@ -49,6 +58,7 @@ const Login = {
                 const token = res.data.token
                 _Storage.setToken(token)
                 Login.container.classList.remove('active')
+                document.location.reload()
                 App.display()
 
 
@@ -80,12 +90,7 @@ const Login = {
 
 }
 
-const url = "https://donates-server.herokuapp.com/api"
-const API = axios.create({
-    baseURL: 'https://donates-server.herokuapp.com/api/',
-    timeout: 10000000000,
-    headers: { 'Authorization': _Storage.getToken() }
-})
+
 
 Login.nameInput.addEventListener('change', (event) => {
     if (Login.nameInput.value.length !== 0) {
@@ -164,7 +169,7 @@ const Donates = {
                 } else {
                     Table.tbody.innerHTML = "";
                     const formatedMonth = Utils.getMonth(month)
-                    Table.text.innerHTML = `<h2>Aqui estão as doações do mês ${formatedMonth}<h2>`
+                    Table.text.innerHTML = `<h2>Aqui estão as doações do mês de ${formatedMonth}<h2>`
                     Table.renderTable(data)
                 }
 

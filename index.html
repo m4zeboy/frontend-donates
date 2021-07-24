@@ -5,9 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>CORAGEM</title>
+    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <!-- Iconst -->
+
+    <link rel="apple-touch-icon" sizes="180x180" href="./assets/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./assets/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./assets/favicons/favicon-16x16.png">
+    <link rel="manifest" href="./assets/favicons/site.webmanifest">
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="./styles/auth.css">
     <link rel="stylesheet" href="./styles/form.css">
@@ -19,9 +27,9 @@
 </head>
 <body>
     
- 
+    <!-- Auth -->
     <div id="authentication" class="active">
-        <form action="" id="auth-form" onsubmit="Login.handleLogin(event)">
+        <form action="" id="auth-form" onsubmit="Login.handleLogin(event)" class="appear">
             <fieldset>
                 <legend>
                     <h2>Autenticação</h2>
@@ -41,13 +49,14 @@
         </form>
     </div>
 
+    <!-- Application -->
     <div id="app" class="">
         <div class="content">
             <header>
                 <img src="./assets/Logo.svg" alt="Logo da campanha Coragem!" title="Logo não oficial da campanha coragem">
             </header>
-            <main class="container">
-                <section id="months">
+            <main class="container appear">
+                <section id="months"class="appear" >
                     <h2><span class="title">Que tal encontrar doações pelo mês?</span> <span class="minimize" onclick="Months.toggleContainer()">Abrir</span></h2>
                     <div class="month-buttons hide">
                         <button id="jan" data-monthID="01" onclick="Donates.all('01')">Janeiro</button>
@@ -100,14 +109,15 @@
                 </section>
                 <a href="#" id="new-donate" class="green-button" onclick="Donates.showModal()" title="Salvar uma nova doação"><h1>+</h1></a>
             </main>
-            <footer>
+            <footer class="appear">
                 <p>Desenvolvido por Moisés Silva de Azevedo</p>
             </footer>
         </div>
     </div>
 
+    <!-- Add donation modal -->
     <div id="modal-add-donate" class="">
-        <form action="" id="add-donate-form" onsubmit="Donates.add(event)">
+        <form action="" id="add-donate-form" onsubmit="Donates.add(event)" class="appear">
             <fieldset>
                 <legend><h2>Salvar uma nova doação</h2> <span class="minimize" onclick="Donates.Modal.toggle()">Fechar</span></legend>
                 <div class="input-box">
