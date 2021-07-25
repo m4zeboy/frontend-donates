@@ -164,7 +164,7 @@ a {
 
 footer.appear {
     display: block;
-    animation-delay: .5s;
+    animation-delay: .3s;
 }
 
 @media (max-width: 700px) {

@@ -1,3 +1,24 @@
+form {
+    width: min(480px, 80vw);
+    background-color: #FFF;
+    padding: 1rem;
+    border-radius: .5rem;
+    box-shadow: 1px 5px 10px #6d6d6d15;
+
+}
+form fieldset {
+    border: none;
+}
+ form fieldset legend {
+     width: 100%;
+     display: flex;
+     justify-content: space-between;
+    margin-bottom: 1.2rem;
+}
+form fieldset p {
+    margin-bottom: 1rem;
+}
+
 /* Inputs */
 .input-box {
     display: flex;
@@ -76,3 +97,14 @@ span.success.active {
     box-shadow: 0px 5px 10px #18da281c;
     transition: all .15s;
 }
+
+select {
+    width: 100%;
+    padding: .8rem;
+    border: 2px solid #d0d0d0;
+    border-radius: .5rem;
+    outline: none;
+    transition: ease .2s;
+    margin-bottom: .4rem;
+}
+

@@ -36,8 +36,6 @@ const App = {
     }
 }
 
-
-
 const Login = {
     nameInput: document.querySelector('#name'),
     passInput: document.querySelector('#password'),
@@ -178,9 +176,6 @@ const Donates = {
                 console.log(err)
             })
     },
-    showModal() {
-        Donates.Modal.toggle()
-    },
     add(event) {
         event.preventDefault();
         const { familyInput, addressInput, responsibleInput, quantityInput, dateInput } = Donates.Form;
@@ -226,11 +221,85 @@ const Donates = {
 
 
     },
-    Modal: {
+    addDonateModal: {
         container: document.querySelector('#modal-add-donate'),
         toggle() {
-            Donates.Modal.container.classList.toggle('active');
+            Donates.addDonateModal.container.classList.toggle('active');
         }
+    },
+    editDonateModal: {
+        container: document.querySelector('#modal-edit-donate'),
+        form: document.querySelector('#modal-edit-donate form'),
+        paragraph: document.querySelector('#modal-edit-donate form fieldset p'),
+        input: document.querySelector('input#donateField'),
+        select: document.querySelector('select#selectField'),
+        toggle() {
+            Donates.editDonateModal.container.classList.toggle('active');
+        },
+        init(event) {
+            // pegar o id da doação
+            const indexOfDonate = event.path[2].dataset.index
+            this.form.dataset.index = indexOfDonate
+            // console.dir(indexOfDonate)
+            this.paragraph.innerHTML = `As alterações serão feitas na doação número ${indexOfDonate}`
+            this.toggle()
+
+            this.select.addEventListener('change', (e) => {
+                const index = e.currentTarget.selectedIndex
+                const attributes = this.input.attributes
+                if(index === 5) {
+                    this.unlockInput("date")
+                } else if (index === 4) {
+                    this.unlockInput("number")
+                } else if (index === 3) {
+                    this.unlockInput("text")
+                } else if (index === 2) {
+                    this.unlockInput("text")
+                } else if (index === 1) {
+                    this.unlockInput("text")
+                }
+            })
+
+        },
+        unlockInput(type) {
+            const attributes = this.input.attributes
+            attributes[0].textContent = type;
+            attributes[0].value = type
+            this.input.disabled = false
+        },
+        submit(event) {
+            event.preventDefault()
+            const indexOfDonate = this.form.dataset.index;
+            const uri = `/donates/${indexOfDonate}`;
+            const indexOfFieldSelected = event.target[1].selectedIndex;
+            let input = event.target[2].value;
+
+            if (event.target[2].type === "date") {
+                input = Utils.formatDate(input)
+                const body = {
+                    [this.getKeyNameForSendOnRequest(indexOfFieldSelected)]: input,
+                }
+            }
+            const body = {
+                [this.getKeyNameForSendOnRequest(indexOfFieldSelected)]: input,
+            }
+            console.log(body)
+
+            
+    },
+    getKeyNameForSendOnRequest(indexOfFieldSelected) {
+        if (indexOfFieldSelected === 1) {
+            return 'family'
+        } else if (indexOfFieldSelected === 2) {
+            return 'address'
+        } else if (indexOfFieldSelected === 3) {
+            return 'responsible'
+        } else if (indexOfFieldSelected === 4) {
+            return 'quantity'
+        } else if (indexOfFieldSelected === 5) {
+            return 'date'
+        }
+    }
     },
     Form: {
         familyInput: document.querySelector('input#family'),
@@ -271,6 +340,7 @@ const Table = {
             const tr = document.createElement('tr');
             // Render row
             tr.dataset.index = donate.id;
+            tr.setAttribute('title', `Doação de número ${donate.id}`)
             tr.innerHTML = Table.renderRow(donate);
             Table.tbody.appendChild(tr)
         })
@@ -282,7 +352,10 @@ const Table = {
             <td>${donate.responsible}</td>
             <td>${donate.quantity}</td>
             <td>${donate.date}</td>
-            <td class="options"><img src="./assets/delete.svg" title="Excluir essa doação"><img src="./assets/edit.svg" title="Editar essa doação"></td>
+            <td class="options">
+                <img src="./assets/delete.svg" title="Excluir essa doação" >
+                <img src="./assets/edit.svg" title="Editar essa doação" onclick="Donates.editDonateModal.init(event)">
+            </td>
             `
     }
 }

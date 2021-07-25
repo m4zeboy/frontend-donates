@@ -107,7 +107,7 @@
                         </table>
                     </div>
                 </section>
-                <a href="#" id="new-donate" class="green-button" onclick="Donates.showModal()" title="Salvar uma nova doação"><h1>+</h1></a>
+                <a href="#" id="new-donate" class="green-button" onclick="Donates.addDonateModal.toggle()" title="Salvar uma nova doação"><h1>+</h1></a>
             </main>
             <footer class="appear">
                 <p>Desenvolvido por Moisés Silva de Azevedo</p>
@@ -119,7 +119,7 @@
     <div id="modal-add-donate" class="">
         <form action="" id="add-donate-form" onsubmit="Donates.add(event)" class="appear">
             <fieldset>
-                <legend><h2>Salvar uma nova doação</h2> <span class="minimize" onclick="Donates.Modal.toggle()">Fechar</span></legend>
+                <legend><h2>Salvar uma nova doação</h2> <span class="minimize" onclick="Donates.addDonateModal.toggle()">Fechar</span></legend>
                 <div class="input-box">
                     <label for="family">Faília</label>
                     <input type="text" id="family" name="family" autocomplete="off">
@@ -147,6 +147,29 @@
             </fieldset>
         </form>
     </div>
+
+    <div id="modal-edit-donate" class="">
+        <form method="POST" id="edit-donate-form" class="appear" onsubmit="Donates.editDonateModal.submit(event)">
+            <fieldset>
+                <legend><h2>Editar Doação</h2> <span class="minimize" onclick="Donates.editDonateModal.toggle()">Fechar</span></legend>
+                <p></p>
+                <select name="field" id="selectField">
+                    <option value="null" hidden >Escolha um campo a ser editado</option>
+                    <option value="1">Família</option>
+                    <option value="2">Endereço</option>
+                    <option value="3">Responsável</option>
+                    <option value="4">Quantidade</option>
+                    <option value="5">Data</option>
+                </select>
+                <div class="input-box">
+                    <label for="donateField">Campo a ser editado</label>
+                    <input type="text" name="donateField" id="donateField" disabled>
+                </div>
+                <button class="submit-button">Atualizar</button>
+            </fieldset>
+        </form>
+    </div class>
+
     <span class="success"></span>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
     <script src="script.js"></script>
