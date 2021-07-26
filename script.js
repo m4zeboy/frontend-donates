@@ -7,8 +7,8 @@ const _Storage = {
     }
 }
 
-// const url = "https://donates-server.herokuapp.com/api"
-const url = "http://localhost:1234/api"
+const url = "https://donates-server.herokuapp.com/api"
+// const url = "http://localhost:1234/api"
 const API = axios.create({
     baseURL: url,
     timeout: 10000000000,
