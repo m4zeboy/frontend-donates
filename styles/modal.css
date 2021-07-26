@@ -14,6 +14,7 @@
     top: 0;
     left: 0;
     background-color: #222222d0;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -67,6 +68,7 @@
     top: 0;
     left: 0;
     background-color: #222222d0;
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
@@ -91,8 +93,46 @@
     left: 0;
     background-color: #222222d0;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
     display: flex;
     align-items: center;
     justify-content: center;
     transition: all .2s;
+}
+
+#modal-export {
+    visibility: hidden;
+    opacity: 0;
+    display: none;
+    transition: all .2s;
+}
+
+#modal-export.active {
+    visibility: visible;
+    opacity: 1;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background-color: #222222d0;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+}
+
+#modal-export.active .content {
+    width: min(300px, 80vw);
+    background-color: #FFF;
+    padding: 1rem;
+    border-radius: .5rem;
+    box-shadow: 1px 5px 10px #6d6d6d15;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    /* justify-content: space-between; */
 }

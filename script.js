@@ -12,7 +12,10 @@ const url = "http://localhost:1234/api"
 const API = axios.create({
     baseURL: url,
     timeout: 10000000000,
-    headers: { 'Authorization': _Storage.getToken() }
+    headers: { 
+        'Authorization': _Storage.getToken(),
+        'Cache-Control': "no-cache, max-age=3600",
+    }
 })
 
 const App = {
@@ -146,6 +149,8 @@ const Utils = {
 }
 
 const Donates = {
+    exportModal: document.querySelector('#modal-export'),
+    exportButton: document.querySelector('#export-button'),
     all(month) {
         Table.text.innerHTML = "<div class='load green'><div>"
         // axios.get(`https://donates-server.herokuapp.com/api/donates/${month}`, { headers: { Authorization: _Storage.getToken()}})
@@ -172,6 +177,18 @@ const Donates = {
                     const formatedMonth = Utils.getMonth(month)
                     Table.text.innerHTML = `<h2>Aqui estão as doações do mês de ${formatedMonth}<h2>`
                     Table.renderTable(data)
+                    this.exportButton.classList.remove('disabled')
+                    // Export Function
+                    this.exportButton.addEventListener('click', (event) => {
+                        Donates.exportModal.classList.add('active')
+                        console.log(event)
+                        API.get(`/donates/pdf/${month}`)
+                        .then((res) => {
+                            window.open(res.data.url, "_blank")
+                            Donates.exportModal.classList.remove('active')
+                            })
+                            .catch((err) => console.log(err))
+                    })
                 }
 
             })
@@ -329,6 +346,7 @@ const Donates = {
         container: document.querySelector('#modal-exclude-donate'),
         form: document.querySelector('#modal-exclude-donate form'),
         paragraph: document.querySelector('#modal-exclude-donate form fieldset p'),
+        yesBtn: document.querySelector('#modal-exclude-donate form fieldset button'),
         toggle() {
             Donates.excludeDonateModal.container.classList.toggle('active');
         },
@@ -341,6 +359,7 @@ const Donates = {
         },
         submit(event) {
             event.preventDefault();
+            this.yesBtn.innerHTML = "<div class='load green'></div>"
             const indexOfDonate = this.form.dataset.index;
             API.delete(`/donates/${indexOfDonate}`)
                 .then((response) => {
@@ -352,6 +371,7 @@ const Donates = {
                         Donates.Form.success.innerHTML = ``
                         Donates.Form.success.classList.remove('active')
                     }, 3000)
+                    this.yesBtn.innerHTML = "Sim"
                 })
                 .catch((error) => {
 
