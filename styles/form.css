@@ -76,21 +76,28 @@ span.error.active {
 }
 
 span.success {
+    display: inline-block;
     opacity: 0;
     transition: all .15s;
-    position: absolute;
+    position: fixed;
     top: 1rem;
     left: -5rem;
     transition: all .15s;
+    z-index: 10000;
+
 }
 
 span.success.active {
+    display: inline-block;
+    position: relative;
+    z-index: 100000000;
     opacity: 1;
     background-color: #212121;
-    padding: .8rem;
-    color: #18da28;
-    border: 1px solid #18da2875;
-    border-radius: .2rem;
+    padding: .4rem;
+    background: rgba(25, 247, 92, 0.541) ;
+    color: #fff;
+    border-left: 3px solid #18da32;
+    /* border-radius: .2rem; */
     position: absolute;
     top: 1rem;
     left: 1rem;

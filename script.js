@@ -7,9 +7,10 @@ const _Storage = {
     }
 }
 
-const url = "https://donates-server.herokuapp.com/api"
+// const url = "https://donates-server.herokuapp.com/api"
+const url = "http://localhost:1234/api"
 const API = axios.create({
-    baseURL: 'https://donates-server.herokuapp.com/api/',
+    baseURL: url,
     timeout: 10000000000,
     headers: { 'Authorization': _Storage.getToken() }
 })
@@ -51,7 +52,7 @@ const Login = {
         const { name, password } = credentials;
         Login.button.innerHTML = "<div class='load'><div>"
 
-        axios.post('https://donates-server.herokuapp.com/api/auth/login', { name, password })
+        axios.post(`${url}/auth/login`, { name, password })
             .then((res) => {
                 const token = res.data.token
                 _Storage.setToken(token)
@@ -65,18 +66,22 @@ const Login = {
                 const message = err.response.data.message;
                 Login.span.classList.add('active');
 
-                console.log(message)
+                console.log(err)
                 if (message === "Name and password are required") {
                     const translatedMessage = "Informe nome e senha"
                     Login.span.innerHTML = `<p>${translatedMessage}</p>`
                     Login.button.innerHTML = "Tente Novamente"
 
-                }
-                if (message === "Invalid Credentials") {
+                } else if (message === "Invalid Credentials") {
                     const translatedMessage = "Credenciais inválidas."
                     Login.span.innerHTML = `<p>${translatedMessage}</p>`
                     Login.button.innerHTML = "Tente Novamente"
+                } else {
+                    Login.span.innerHTML = `<p>Erro no Servidor</p>`
+                    Login.button.innerHTML = "Tente Novamente"
+
                 }
+
 
                 setTimeout(() => {
                     Login.span.innerHTML = ``
@@ -87,8 +92,6 @@ const Login = {
     }
 
 }
-
-
 
 Login.nameInput.addEventListener('change', (event) => {
     if (Login.nameInput.value.length !== 0) {
@@ -178,8 +181,11 @@ const Donates = {
     },
     add(event) {
         event.preventDefault();
+        const submitButton = document.querySelector('#modal-add-donate form button')
+        submitButton.innerHTML = "<div class='load'></div>"
         const { familyInput, addressInput, responsibleInput, quantityInput, dateInput } = Donates.Form;
         const inputValuesIsEmpty = Donates.Form.verifyIfValuesIsEmpty()
+
         if (inputValuesIsEmpty) {
             Donates.Form.error.classList.add('active')
             Donates.Form.error.innerHTML = "Preencha todos os campos"
@@ -188,6 +194,9 @@ const Donates = {
                 Donates.Form.error.innerHTML = ``
                 Donates.Form.error.classList.remove('active')
             }, 3000)
+            submitButton.innerHTML = "Tente novamente"
+
+
         } else {
             const formatedDate = Utils.formatDate(dateInput.value)
             const monthOfDonate = Utils.getMonthOfDonateAdded(formatedDate)
@@ -203,7 +212,7 @@ const Donates = {
                 .then((response) => {
                     console.log(response.data.message)
                     Donates.Form.resetValues();
-                    Donates.Modal.container.classList.remove('active')
+                    Donates.addDonateModal.container.classList.remove('active')
                     Donates.Form.success.classList.add('active')
                     Donates.Form.success.innerHTML = "Doação Salva"
 
@@ -211,6 +220,8 @@ const Donates = {
                         Donates.Form.success.innerHTML = ``
                         Donates.Form.success.classList.remove('active')
                     }, 3000)
+                submitButton.innerHTML = "Adicionar"
+                this.all(monthOfDonate)
                 })
                 .catch((error) => {
                     console.log(error)
@@ -283,7 +294,20 @@ const Donates = {
             const body = {
                 [this.getKeyNameForSendOnRequest(indexOfFieldSelected)]: input,
             }
-            console.log(body)
+            API.patch(uri, body)
+                .then((response) => {
+                    event.target[2].value = ""
+                    this.container.classList.remove('active')
+                    Donates.Form.success.classList.add('active')
+                    Donates.Form.success.innerHTML = "Edição Salva, Atualize a página"
+
+                    setTimeout(() => {
+                        Donates.Form.success.innerHTML = ``
+                        Donates.Form.success.classList.remove('active')
+                    }, 3000)
+                    // window.location.reload()
+                })
+                .catch((error) => console.log(error))
 
             
     },
@@ -300,6 +324,40 @@ const Donates = {
             return 'date'
         }
     }
+    },
+    excludeDonateModal: {
+        container: document.querySelector('#modal-exclude-donate'),
+        form: document.querySelector('#modal-exclude-donate form'),
+        paragraph: document.querySelector('#modal-exclude-donate form fieldset p'),
+        toggle() {
+            Donates.excludeDonateModal.container.classList.toggle('active');
+        },
+        init(event) {
+            this.toggle()
+            const indexOfDonate = event.path[2].dataset.index;
+            this.form.dataset.index = indexOfDonate
+            this.paragraph.innerHTML = `Está prestes a excluir a doação nº ${indexOfDonate}`
+            console.log(indexOfDonate)
+        },
+        submit(event) {
+            event.preventDefault();
+            const indexOfDonate = this.form.dataset.index;
+            API.delete(`/donates/${indexOfDonate}`)
+                .then((response) => {
+                    this.container.classList.remove('active')
+                    Donates.Form.success.classList.add('active')
+                    Donates.Form.success.innerHTML = "Doação Removida, Atualize a página"
+
+                    setTimeout(() => {
+                        Donates.Form.success.innerHTML = ``
+                        Donates.Form.success.classList.remove('active')
+                    }, 3000)
+                })
+                .catch((error) => {
+
+                })
+            console.log(indexOfDonate)
+        }
     },
     Form: {
         familyInput: document.querySelector('input#family'),
@@ -334,8 +392,6 @@ const Table = {
     tbody: document.querySelector('#data-table table tbody'),
     text: document.querySelector('#data-table span'),
     renderTable(donates) {
-        // Table.paragraph.innerHTML = `Resultados do mês ${month}`
-        console.log(donates)
         donates.forEach(donate => {
             const tr = document.createElement('tr');
             // Render row
@@ -353,13 +409,12 @@ const Table = {
             <td>${donate.quantity}</td>
             <td>${donate.date}</td>
             <td class="options">
-                <img src="./assets/delete.svg" title="Excluir essa doação" >
+                <img src="./assets/delete.svg" title="Excluir essa doação" onclick="Donates.excludeDonateModal.init(event)">
                 <img src="./assets/edit.svg" title="Editar essa doação" onclick="Donates.editDonateModal.init(event)">
             </td>
             `
-    }
+    },
+    
 }
-
-
 
 App.init()

@@ -10,12 +10,40 @@ html, body {
 }
 a {
     text-decoration: none;
+    color: black;
 }
 
 
 
+[aria-label] {
+    position: relative;
+    transition: all .15s;
+}
+[aria-label]::after {
+    content: attr(aria-label);
+    display: none;
+    position: absolute;
+    width: 8rem;
+    top: 110%;
+    border-radius: .2rem;
+    left: 0;
+    text-align: center;
+    z-index: 5000;
+    pointer-events: none;
+    padding: 8px 10px;
+    text-decoration: none;
+    font-size: .7em;
+    color: #fff;
+    background-color: #525252;
+    transition: all .15s;
 
+}
 
+[aria-label]:hover::after {
+    display: block;
+    transition: all .15s;
+
+}
 /* APP */
 .container {
     width: min(1000px, 90vw);
@@ -139,23 +167,16 @@ a {
     visibility: visible;
 }
 
-#sidebar {
+#app.active main section#sidebar {
     grid-area: sidebar;
-}
-
-
-#new-donate {
-    height: 5rem;
-    border-radius: 10rem;
+    padding: 0;
+    background-color: transparent;
+    /* height: 11rem; */
     display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all .2s;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#new-donate:hover {
-    box-shadow: 0px 7px 10px rgba(95, 214, 26, 0.205);
-}
 
 #app.active footer {
     text-align: center;
@@ -182,12 +203,16 @@ footer.appear {
         grid-template-columns: 1fr 1fr 1fr;
     }
 
-    #new-donate {
-        width: 5rem;
-        height: 5rem;
-        border-radius: 10rem;
-        position: fixed;
-        left: 1rem;
-        bottom: 1rem;
+    #app.active main section#sidebar {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        padding: .8rem;
+        background-color: #fbfbfb;
+    }
+    #app.active main section#sidebar .btn-round {
+        width: 3rem;
+        height: 3rem;
+        height: auto;
     }
 }

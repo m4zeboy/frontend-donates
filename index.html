@@ -107,10 +107,13 @@
                         </table>
                     </div>
                 </section>
-                <a href="#" id="new-donate" class="green-button" onclick="Donates.addDonateModal.toggle()" title="Salvar uma nova doação"><h1>+</h1></a>
+                <section id="sidebar">
+                    <a href="#" class="btn-round green" onclick="Donates.addDonateModal.toggle()" title="Salvar uma nova doação" aria-label="Salvar uma nova doação"><h1>+</h1></a>
+                    <a href="#" class="btn-round blue disabled" disabled><img src="./assets/share.svg" alt="Compartilhar" title="Compartilhar"></a>
+                </section>
             </main>
             <footer class="appear">
-                <p>Desenvolvido por Moisés Silva de Azevedo</p>
+                <!-- <p>Desenvolvido por Moisés Silva de Azevedo</p> -->
             </footer>
         </div>
     </div>
@@ -168,9 +171,24 @@
                 <button class="submit-button">Atualizar</button>
             </fieldset>
         </form>
-    </div class>
+    </div>
 
-    <span class="success"></span>
+    <div id="modal-exclude-donate" class="">
+        <form id="edit-donate-form" class="appear" onsubmit="">
+            <fieldset>
+                <legend><h2>Você tem certeza de que quer excluir essa doação?</h2> <span class="minimize" onclick="Donates.excludeDonateModal.toggle(event)">Fechar</span></legend>
+                <p></p>
+                <p></p>
+                <div class="btn-group">
+                    <button class="btn-choose yes" onclick="Donates.excludeDonateModal.submit(event)">Sim</button>
+                    <a href="#" class="btn-choose no" onclick="Donates.excludeDonateModal.toggle()">Não</a>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+
+    </div>
+    <span class="success active">aaaaaaaaaaa</span>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.18.0/axios.js"></script>
     <script src="script.js"></script>
 </body>
