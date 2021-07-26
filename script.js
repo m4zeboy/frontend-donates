@@ -7,15 +7,16 @@ const _Storage = {
     }
 }
 
-const url = "https://donates-server.herokuapp.com/api"
-// const url = "http://localhost:1234/api"
+// const url = "https://donates-server.herokuapp.com/api"
+const url = "http://localhost:1234/api"
 const API = axios.create({
     baseURL: url,
     timeout: 10000000000,
     headers: { 
         'Authorization': _Storage.getToken(),
         'Cache-Control': "no-cache, max-age=3600",
-    }
+    },
+    mode: 'no-cors'
 })
 
 const App = {
@@ -178,13 +179,28 @@ const Donates = {
                     Table.text.innerHTML = `<h2>Aqui estão as doações do mês de ${formatedMonth}<h2>`
                     Table.renderTable(data)
                     this.exportButton.classList.remove('disabled')
+
                     // Export Function
                     this.exportButton.addEventListener('click', (event) => {
+                        event.preventDefault()
                         Donates.exportModal.classList.add('active')
                         console.log(event)
-                        API.get(`/donates/pdf/${month}`)
-                        .then((res) => {
-                            window.open(res.data.url, "_blank")
+                        // CREATE PDF
+                        API.get(`/donates/pdf/${month}`, {
+                            responseType: 'arraybuffer',
+                            headers: {
+                                'Accept': 'applicatin/pdf'
+                            }
+                        })
+                        .then((response) => {
+                           
+                            const url = window.URL.createObjectURL(new Blob([response.data]));
+                            const link = document.createElement('a');
+                            link.href = url;
+                            link.setAttribute('download', 'file.pdf'); //or any other extension
+                            document.body.appendChild(link);
+                            link.click();
+
                             Donates.exportModal.classList.remove('active')
                             })
                             .catch((err) => console.log(err))
