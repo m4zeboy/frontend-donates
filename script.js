@@ -97,14 +97,6 @@ const Login = {
 
 }
 
-Login.nameInput.addEventListener('change', (event) => {
-    if (Login.nameInput.value.length !== 0) {
-        Login.passInput.disabled = false
-    } else {
-        Login.passInput.disabled = true
-    }
-})
-
 const Months = {
     container: document.querySelector('#months .month-buttons'),
     spanClose: document.querySelector("#months .minimize"),
