@@ -63,8 +63,6 @@ const Login = {
                 Login.container.classList.remove('active')
                 document.location.reload()
                 App.display()
-
-
             })
             .catch((err) => {
                 const message = err.response.data.message;
@@ -85,8 +83,6 @@ const Login = {
                     Login.button.innerHTML = "Tente Novamente"
 
                 }
-
-
                 setTimeout(() => {
                     Login.span.innerHTML = ``
                     Login.span.classList.remove('active')

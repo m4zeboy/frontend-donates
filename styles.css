@@ -54,11 +54,12 @@ a {
     transition: all .2s;
     opacity: 0;
     visibility: hidden; 
+    display: none;
 }
 
 #app.active {
+    display: block;
     opacity: 1;
-
     /* background-color: aliceblue; */
     visibility: visible;
 

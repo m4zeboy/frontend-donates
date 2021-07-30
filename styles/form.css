@@ -10,11 +10,11 @@ form fieldset {
     border: none;
 }
  form fieldset legend {
-     width: 100%;
-     display: flex;
-     justify-content: space-between;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
     margin-bottom: 1.2rem;
-}
+    }
 form fieldset p {
     margin-bottom: 1rem;
 }
@@ -34,7 +34,6 @@ form fieldset p {
     border-radius: .5rem;
     outline: none;
     transition: ease .2s;
-
 }
 
 .input-box label {
