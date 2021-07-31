@@ -19,6 +19,10 @@ form fieldset p {
     margin-bottom: 1rem;
 }
 
+input[type="date"] {
+    width: 100%;
+}
+
 /* Inputs */
 .input-box {
     display: flex;
