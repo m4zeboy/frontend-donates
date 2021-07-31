@@ -265,14 +265,22 @@ const Donates = {
         paragraph: document.querySelector('#modal-edit-donate form fieldset p'),
         input: document.querySelector('input#donateField'),
         select: document.querySelector('select#selectField'),
+        donate: {},
+        month: "",
         toggle() {
             Donates.editDonateModal.container.classList.toggle('active');
         },
         init(event) {
             // pegar o id da doação
-            const indexOfDonate = event.path[2].dataset.index
+            this.donate = event.path[2]
+            const indexOfDonate = this.donate.dataset.index;
             this.form.dataset.index = indexOfDonate
-            // console.dir(indexOfDonate)
+            const date = this.donate.children[4].innerHTML
+            const splitedDate = date.split("/")
+            const selectedMonth = splitedDate[1]
+            this.month = selectedMonth;
+            console.log(this.month)
+
             this.paragraph.innerHTML = `As alterações serão feitas na doação número ${indexOfDonate}`
             this.toggle()
 
@@ -308,6 +316,9 @@ const Donates = {
 
             if (event.target[2].type === "date") {
                 input = Utils.formatDate(input)
+                const splitedDate = input.split('/')
+                const selectedMonth = splitedDate[1]
+                this.month = selectedMonth;
                 const body = {
                     [this.getKeyNameForSendOnRequest(indexOfFieldSelected)]: input,
                 }
@@ -319,14 +330,18 @@ const Donates = {
                 .then((response) => {
                     event.target[2].value = ""
                     this.container.classList.remove('active')
+                    // window.location.reload()
                     Donates.Form.success.classList.add('active')
-                    Donates.Form.success.innerHTML = "Edição Salva, Atualize a página"
+                    Donates.Form.success.innerHTML = "Edição Salva"
+
+
+                    Donates.all(this.month)
+
 
                     setTimeout(() => {
                         Donates.Form.success.innerHTML = ``
                         Donates.Form.success.classList.remove('active')
                     }, 3000)
-                    // window.location.reload()
                 })
                 .catch((error) => console.log(error))
 
@@ -351,26 +366,33 @@ const Donates = {
         form: document.querySelector('#modal-exclude-donate form'),
         paragraph: document.querySelector('#modal-exclude-donate form fieldset p'),
         yesBtn: document.querySelector('#modal-exclude-donate form fieldset button'),
+        donate: {},
+        month: "",
         toggle() {
             Donates.excludeDonateModal.container.classList.toggle('active');
         },
         init(event) {
+            this.donate = event.path[2]
+            const date = this.donate.children[4].innerHTML
+            const splitedDate = date.split('/')
+            this.month = splitedDate[1]
             this.toggle()
-            const indexOfDonate = event.path[2].dataset.index;
+            const indexOfDonate = this.donate.dataset.index;
             this.form.dataset.index = indexOfDonate
             this.paragraph.innerHTML = `Está prestes a excluir a doação nº ${indexOfDonate}`
-            console.log(indexOfDonate)
         },
         submit(event) {
             event.preventDefault();
+
             this.yesBtn.innerHTML = "<div class='load green'></div>"
             const indexOfDonate = this.form.dataset.index;
             API.delete(`/donates/${indexOfDonate}`)
                 .then((response) => {
                     this.container.classList.remove('active')
                     Donates.Form.success.classList.add('active')
-                    Donates.Form.success.innerHTML = "Doação Removida, Atualize a página"
+                    Donates.Form.success.innerHTML = "Doação Removida"
 
+                    Donates.all(this.month)
                     setTimeout(() => {
                         Donates.Form.success.innerHTML = ``
                         Donates.Form.success.classList.remove('active')

@@ -172,7 +172,7 @@ a {
     grid-area: sidebar;
     padding: 0;
     background-color: transparent;
-    /* height: 11rem; */
+    height: 12rem;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -207,13 +207,16 @@ footer.appear {
     #app.active main section#sidebar {
         display: flex;
         flex-direction: row;
+        justify-content: space-around;
+        height: 5.8rem;
         align-items: center;
         padding: .8rem;
         background-color: #fbfbfb;
     }
     #app.active main section#sidebar .btn-round {
-        width: 3rem;
-        height: 3rem;
+        width: 44%;
+        height: 4rem;
+        border-radius: .5rem;
         height: auto;
     }
 }
