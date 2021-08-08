@@ -164,7 +164,11 @@ const Donates = {
                 } else {
                     Table.tbody.innerHTML = "";
                     const formatedMonth = Utils.getMonth(month)
-                    Table.text.innerHTML = `<h2>Aqui estão as doações do mês de ${formatedMonth}<h2>`
+                    const total = data.reduce((count, actual) => {
+                        return count + actual.quantity
+                    }, 0)
+                    Table.text.innerHTML = `<h2>Aqui estão as doações do mês de ${month}</h2> 
+                    <p><strong>Total de doações:</strong> ${total}</p> <br>`
                     Table.renderTable(data)
                     this.exportButton.classList.remove('disabled')
 
